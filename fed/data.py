@@ -37,6 +37,11 @@ def download_gdp(start_year=2000, end_year=2022):
         }
         for row in payload[1]
     )
+
+    df["gdp"] = df["gdp"] / 1e12  # convert US$ to trillions of US$
+    
     return df.pivot(index="year", columns="country", values="gdp")[
         list(countries.values())
     ].reset_index()
+
+print(download_gdp(2000,2022))
