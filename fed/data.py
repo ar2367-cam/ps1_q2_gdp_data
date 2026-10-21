@@ -42,6 +42,6 @@ def download_gdp(start_year=2000, end_year=2022):
     
     return df.pivot(index="year", columns="country", values="gdp")[
         list(countries.values())
-    ].reset_index()
+    ].rename_axis(columns=None).reset_index()
 
 print(download_gdp(2000,2022))
