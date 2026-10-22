@@ -1,0 +1,15 @@
+[workspace]
+authors = ["Akhil Raghavan <ar2367@cam.ac.uk>"]
+channels = ["conda-forge"]
+name = "ps1_q2_gdp_data"
+platforms = ["win-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.13.*"
+pandas = ">=3.0.6,<4"
+requests = ">=2.34.2,<3"
+matplotlib = ">=3.11.2,<4"
+ipykernel = ">=7.4.0,<8"
