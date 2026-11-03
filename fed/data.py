@@ -2,12 +2,13 @@ import pandas as pd
 import requests
 
 
-def download_gdp(start_year=2000, end_year=2022):
+def download_gdp(start_year: int = 2000, end_year: int = 2022) -> pd.DataFrame:
     """Download yearly GDP (current US$) from the World Bank API.
 
     Returns a dataframe with one row per year and one column per country.
     """
-    wb_url = "https://api.worldbank.org/v2/country/{countries}/indicator/{indicator}"
+    wb_base = "https://api.worldbank.org/v2"
+    wb_url = wb_base + "/country/{countries}/indicator/{indicator}"
     gdp_indicator = "NY.GDP.MKTP.CD"  # GDP, current US$
     countries = {
         "GBR": "United Kingdom",
@@ -19,9 +20,14 @@ def download_gdp(start_year=2000, end_year=2022):
         "CHE": "Switzerland",
     }
 
+    params: dict[str, str | int] = {
+        "format": "json",
+        "date": f"{start_year}:{end_year}",
+        "per_page": 1000,
+    }
     response = requests.get(
         wb_url.format(countries=";".join(countries), indicator=gdp_indicator),
-        params={"format": "json", "date": f"{start_year}:{end_year}", "per_page": 1000},
+        params=params,
         timeout=30,
     )
     response.raise_for_status()
@@ -39,9 +45,14 @@ def download_gdp(start_year=2000, end_year=2022):
     )
 
     df["gdp"] = df["gdp"] / 1e12  # convert US$ to trillions of US$
-    
-    return df.pivot(index="year", columns="country", values="gdp")[
-        list(countries.values())
-    ].rename_axis(columns=None).reset_index()
 
-print(download_gdp(2000,2022))
+    return (
+        df.pivot(index="year", columns="country", values="gdp")[
+            list(countries.values())
+        ]
+        .rename_axis(columns=None)
+        .reset_index()
+    )
+
+
+print(download_gdp(2000, 2022))
