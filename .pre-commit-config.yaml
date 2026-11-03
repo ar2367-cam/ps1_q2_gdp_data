@@ -1,0 +1,38 @@
+repos:
+  # Python linting and formatting (fast, modern)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.18 # same version as `ruff` in pixi.toml
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  # Static type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0
+    hooks:
+      - id: mypy
+        additional_dependencies: [types-seaborn, types-requests, polars, pandas-stubs, matplotlib]
+        args: ["--ignore-missing-imports", "--strict"]
+
+  # General hygiene checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: [--maxkb=500]
+
+  # Consistent Markdown formatting
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        files: "\\.md$"
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.5.0
+    hooks:
+    -   id: flake8
