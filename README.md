@@ -1,8 +1,10 @@
 # Problem Set 1 - Question 2
+
 This repository downloads yearly GDP data (current US$) for the UK, USA, Brazil, Japan, China, Germany and Switzerland from the World Bank API, and explores and plots it over 2000-2022.
 
 ## How to run the code
-*Pre-Requisites*: You need [pixi](https://pixi.sh) installed
+
+_Pre-Requisites_: You need [pixi](https://pixi.sh) installed
 
 1. Clone the repository and move into it:
    ```
